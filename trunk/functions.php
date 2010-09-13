@@ -11,7 +11,7 @@ function getRecords() {
 	$records = array();
 	$result = mysql_query('SELECT `user`, `date`, `event`, TIMESTAMPDIFF(SECOND, NOW(), `date`) AS `timeLeft` FROM `waiting` WHERE NOW() < `date` ORDER BY `date` ASC LIMIT 10');
 	while ($record = mysql_fetch_assoc($result)) {
-		$records[] = formatRecord($record);
+		$records[] = $record;
 	}
 	
 	return $records;
@@ -67,7 +67,7 @@ function calculateTimeLeft($record) {
 }
 
 function formatTimeUnits($timeLeft) {
-	global $formats, $localization;
+	global $formats;
 	
 	$timeUnits = getTimeUnits();
 	
@@ -75,7 +75,7 @@ function formatTimeUnits($timeLeft) {
 	foreach ($timeUnits as $n => $timeUnit) {
 		$time[$n] = vsprintf($formats['unit'], array(
 			1 => $timeLeft[$timeUnit],
-			2 => $timeLeft[$timeUnit] === 1 ? $localization[substr($timeUnit, 0, -1)] : $localization[$timeUnit]
+			2 => localize($timeLeft[$timeUnit] === 1 ? substr($timeUnit, 0, -1) : $timeUnit)
 		));
 	}
 	
@@ -94,4 +94,10 @@ function formatRecord($record) {
 		3 => $record['event'],
 		4 => $record['date']
 	));
+}
+
+function localize($string) {
+	global $localization;
+	
+	return isset($localization[$string]) ? $localization[$string] : $string;
 }

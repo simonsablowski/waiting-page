@@ -1,13 +1,13 @@
 <html>
 <head>
-	<title><? echo $localization['title']; ?></title>
+	<title><? echo localize('title'); ?></title>
 </head>
 <body>
 
 <div>
 	<? foreach ($records as $record): ?>
 	<p>
-		<? echo $record; ?>
+		<? echo formatRecord($record); ?>
 	</p>
 	<? endforeach; ?>
 </div>
