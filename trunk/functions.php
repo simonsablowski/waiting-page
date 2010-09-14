@@ -75,7 +75,7 @@ function formatTimeUnits($timeLeft) {
 	foreach ($timeUnits as $n => $timeUnit) {
 		$time[$n] = vsprintf($formats['unit'], array(
 			1 => $timeLeft[$timeUnit],
-			2 => localize($timeLeft[$timeUnit] === 1 ? substr($timeUnit, 0, -1) : $timeUnit)
+			2 => localize($timeLeft[$timeUnit] == 1 ? substr($timeUnit, 0, -1) : $timeUnit)
 		));
 	}
 	
